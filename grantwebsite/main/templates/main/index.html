@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -40,18 +41,40 @@
             height: 100vh; /* Высота на весь экран */
             overflow: auto; /* Позволяет прокрутку */
         }
+        .language-switch {
+            position: absolute;
+            bottom: 20px;
+            right: 20px; /* Перемещение в правый нижний угол */
+            z-index: 2;
+            text-align: center;
+        }
+        .language-button {
+            background: rgba(255, 255, 255, 0.5); /* Полупрозрачный фон */
+            color: black;
+            border: none;
+            padding: 10px;
+            margin: 0 5px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .language-button:hover {
+            background: rgba(255, 255, 255, 0.8); /* Более яркий фон при наведении */
+        }
     </style>
 </head>
 <body>
+    {% load static %}
     <div class="video-container">
         <video autoplay muted loop>
             <source src="{% static 'main/mp4/Волчий водопад. КХ Байкула. БАМ. Актобе облысы, Казахст - Trim.mp4' %}" type="video/mp4">
             Ваш браузер не поддерживает видео.
         </video>
         <div class="scrollable">
-            <div class="content">
-                <h1>Волчий водопад</h1>
-                <big>Водопад в ущелье реки Эбита был создан в 70-е годы
+            <div class="content" id="content">
+                <h1 id="title">Волчий водопад</h1>
+                <big id="description">Водопад в ущелье реки Эбита был создан в 70-е годы
                     прошлого века как отвод воды от Большого Ащылысайского моря.
                     По легенде, во время весеннего паводка сюда пришла волчица с
                     волчатами. Она пыталась перевести своих детёнышей через бурный
@@ -60,6 +83,41 @@
                     отдыхающих, плач матери о погибших волчатах они слышали не раз.</big>
             </div>
         </div>
+        <div class="language-switch">
+            <button class="language-button" onclick="changeLanguage('kz')">kz</button>
+            <button class="language-button" onclick="changeLanguage('en')">en</button>
+            <button class="language-button" onclick="changeLanguage('ru')">ru</button>
+        </div>
     </div>
+
+    <script>
+        function changeLanguage(lang) {
+            const title = document.getElementById("title");
+            const description = document.getElementById("description");
+
+            if (lang === 'kz') {
+                title.textContent = "Қасқыр Шарлау";
+                description.innerHTML = "Эбита өзенінің шатқалындағы сарқырама 1970 жылдары..."
+                    + " ағынды үлкен Ащылысай теңізіне алып келу үшін құрылды."
+                    + " Көктемдегі су тасқыны кезінде бұл жерге қасқыр келген екен."
+                    + " Ол өзінің балаларын ағыс арқылы өткізуге тырысқан, бірақ оларды су ағып кетті."
+                    + " Қасқыр аман қалды, ал содан бері ол әр түнде шатқалға келіп, ауланып отырады.";
+            } else if (lang === 'en') {
+                title.textContent = "Wolf Waterfall";
+                description.innerHTML = "The waterfall in the Ebita River gorge was created in the 1970s..."
+                    + " as a diversion of water from the Big Ashylysay Sea."
+                    + " According to legend, during the spring flood, a she-wolf came here with her cubs."
+                    + " She tried to lead her pups across the raging stream, but they were swept away."
+                    + " The she-wolf survived, and since then she comes to the gorge every night and howls.";
+            } else if (lang === 'ru') {
+                title.textContent = "Волчий водопад";
+                description.innerHTML = "Водопад в ущелье реки Эбита был создан в 70-е годы..."
+                    + " прошлого века как отвод воды от Большого Ащылысайского моря."
+                    + " По легенде, во время весеннего паводка сюда пришла волчица с волчатами."
+                    + " Она пыталась перевести своих детёнышей через бурный поток, но их смыло водой."
+                    + " Волчица выжила, и с тех пор она каждую ночь приходит в ущелье и воет.";
+            }
+        }
+    </script>
 </body>
 </html>
